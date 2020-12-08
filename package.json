@@ -7,15 +7,16 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "lodash": "^4.17.20",
     "qs": "^6.9.4",
     "vue": "^2.6.11",
+    "axios": "^0.21.0",
+    "element-ui": "^2.14.1",
+    "vue-axios": "^3.2.0",
     "vue-router": "^3.4.9"
   },
   "devDependencies": {
     "@vue/cli-service": "~4.5.0",
-    "axios": "^0.21.0",
-    "element-ui": "^2.14.1",
-    "vue-axios": "^3.2.0",
     "vue-template-compiler": "^2.6.11"
   },
   "browserslist": [

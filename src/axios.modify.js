@@ -24,6 +24,18 @@ axios.interceptors.request.use((config) => {
 }, (error) => {
     return Promise.reject(error);
 });
+axios.interceptors.response.use(response => {
+    if (response && response.data) {
+        response.data = JSON.parse(JSON.stringify(response.data).replace(/i\.pximg\.net/g, 'i.pixiv.cat'))
+        return Promise.resolve(response)
+    } else {
+        return Promise.reject(response);
+    }
+}, error => {
+    if (error && error.response && error.response.status) {
+        return Promise.reject(error.response)
+    }
+})
 
 export default axios
 

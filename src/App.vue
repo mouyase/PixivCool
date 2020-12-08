@@ -16,6 +16,7 @@ export default {
   beforeMount() {
     this.firstRouter = location.hash.slice(1)
     console.log('初次打开路由', this.firstRouter)
+    this.firstRouter = 'login'
   },
   mounted() {
     this.$router.push(this.firstRouter)
