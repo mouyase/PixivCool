@@ -41,7 +41,12 @@ export default axios
 
 function getTime() {
     let date = new Date()
-    return date.getFullYear().toString() + '-' + (date.getMonth() + 1).toString() + '-' + date.getDate().toString() + 'T' + date.getHours().toString() + ':' + date.getMinutes().toString() + '' + date.getSeconds().toString() + '+08:00'
+    return date.getFullYear().toString() + '-' + (date.getMonth() + 1).toString() + '-' + appendZero(date.getDate()).toString() + 'T' + date.getHours().toString() + ':' + date.getMinutes().toString() + ':' + date.getSeconds().toString() + '+08:00'
+}
+
+function appendZero(obj) {
+    if (obj < 10) return "0" + "" + obj;
+    else return obj;
 }
 
 function md5(string) {

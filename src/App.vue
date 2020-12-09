@@ -13,13 +13,17 @@ export default {
       firstRouter: '/'
     }
   },
-  beforeMount() {
+  created() {
     this.firstRouter = location.hash.slice(1)
+    this.app.appFirstRouter = location.hash.slice(1)
     console.log('初次打开路由', this.firstRouter)
+    console.log('app初次打开路由', this.app.appFirstRouter)
     this.firstRouter = 'login'
+    this.$router.replace(this.firstRouter).catch(err => err)
+  },
+  beforeMount() {
   },
   mounted() {
-    this.$router.push(this.firstRouter)
   }
 }
 </script>
@@ -28,5 +32,8 @@ export default {
 body {
   padding: 0;
   margin: 0;
+  width: 100%;
+  height: 100%;
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
 }
 </style>

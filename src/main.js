@@ -6,12 +6,14 @@ import App from './App.vue';
 import axios from '@/axios.modify'
 import VueAxios from "vue-axios"
 import pixiv from '@/pixiv'
+import app from '@/app'
 import _ from 'lodash'
 
 
 Vue.use(ElementUI);
 Vue.use(VueAxios, axios)
 Vue.prototype.pixiv = pixiv;
+Vue.prototype.app = app;
 Vue.prototype._ = _
 
 new Vue({
