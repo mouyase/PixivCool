@@ -77,12 +77,20 @@ export default {
         grant_type: 'password',
         username: this.form_data.username,
         password: this.form_data.password,
-        device_token: '',
+        device_token: 'pixiv',
         get_secure_url: true,
         include_policy: true
       }
       this.$http.post(this.pixiv.URL_OAUTH + '/auth/token', postData).then(response => {
         this.$loading().close()
+        let userData = this._.get(response, 'data.response')
+        if (userData) {
+          this.app.setUser(userData)
+          if (this.app.firstRouter.indexOf('/login') !== 0) {
+            this.app.firstRouter = '/'
+          }
+          this.$router.replace(this.app.firstRouter).catch(err => err)
+        }
       }).catch(error => {
         this.$loading().close()
         let message = this._.get(error, 'data.errors.system.message')

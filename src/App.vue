@@ -1,3 +1,4 @@
+<script src="app.js"></script>
 <template>
   <div id="app">
     <router-view/>
@@ -9,17 +10,16 @@ export default {
   name: 'App',
   components: {},
   data() {
-    return {
-      firstRouter: '/'
-    }
+    return {}
   },
   created() {
-    this.firstRouter = location.hash.slice(1)
-    this.app.appFirstRouter = location.hash.slice(1)
+    this.app.firstRouter = location.hash.slice(1)
     console.log('初次打开路由', this.firstRouter)
     console.log('app初次打开路由', this.app.appFirstRouter)
-    this.firstRouter = 'login'
-    this.$router.replace(this.firstRouter).catch(err => err)
+    if (!this.app.isLogin()) {
+      this.app.firstRouter = 'login'
+    }
+    this.$router.replace(this.app.firstRouter).catch(err => err)
   },
   beforeMount() {
   },

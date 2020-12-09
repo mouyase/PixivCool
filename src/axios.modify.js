@@ -1,5 +1,7 @@
 import Axios from "axios";
 import qs from "qs";
+import app from '@/app'
+import _ from 'lodash'
 
 let time = getTime()
 let hash = md5(time + '28c1fdd170a5204386cb1313c7077b34f83e4aaf4aa829ce78c231e05b0bae2c')
@@ -15,10 +17,20 @@ let axios = Axios.create({
         'x-client-hash': hash,
     }
 })
+// {"error":{"user_message":"","message":"Error occurred at the OAuth process. Please check your Access Token to fix this. Error Message: invalid_grant","reason":"","user_message_details":{}}}
+// {"has_error":true,"errors":{"system":{"message":"103:pixiv ID\u3001\u307e\u305f\u306f\u30e1\u30fc\u30eb\u30a2\u30c9\u30ec\u30b9\u3001\u30d1\u30b9\u30ef\u30fc\u30c9\u304c\u6b63\u3057\u3044\u304b\u30c1\u30a7\u30c3\u30af\u3057\u3066\u304f\u3060\u3055\u3044\u3002","code":1508}},"error":"invalid_grant"}
 // axios.defaults.withCredentials = true
 axios.interceptors.request.use((config) => {
+    console.log(Number(app.getRefreshTime()))
+    console.log(new Date().getTime())
+    if (Number(app.getRefreshTime()) < new Date().getTime()) {
+        console.log('该换Token了！')
+    }
     if (config.method === 'post') {
         config.data = qs.stringify(config.data);
+    }
+    if (app.getUser()) {
+        config.headers.authorization = 'Bearer ' + app.getUser().access_token;
     }
     return config;
 }, (error) => {
@@ -33,6 +45,9 @@ axios.interceptors.response.use(response => {
     }
 }, error => {
     if (error && error.response && error.response.status) {
+        // if (String(_.get(error, 'response.error.message')).indexOf('Error occurred at the OAuth process.') !== 0) {
+        //    app.getUser().refresh_token();
+        // }
         return Promise.reject(error.response)
     }
 })
@@ -41,12 +56,15 @@ export default axios
 
 function getTime() {
     let date = new Date()
-    return date.getFullYear().toString() + '-' + (date.getMonth() + 1).toString() + '-' + appendZero(date.getDate()).toString() + 'T' + date.getHours().toString() + ':' + date.getMinutes().toString() + ':' + date.getSeconds().toString() + '+08:00'
+    return appendZero(date.getFullYear()) + '-' + appendZero(date.getMonth() + 1) + '-' + appendZero(date.getDate()) + 'T' + appendZero(date.getHours()) + ':' + appendZero(date.getMinutes()) + ':' + appendZero(date.getSeconds()) + '+08:00'
 }
 
-function appendZero(obj) {
-    if (obj < 10) return "0" + "" + obj;
-    else return obj;
+function appendZero(number) {
+    if (number < 10) {
+        return "0" + String(number);
+    } else {
+        return String(number);
+    }
 }
 
 function md5(string) {
