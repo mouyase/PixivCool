@@ -8,10 +8,11 @@ import VueAxios from "vue-axios"
 import pixiv from '@/pixiv'
 import app from '@/app'
 import _ from 'lodash'
-
+import VirtualCollection from 'vue-virtual-collection'
 
 Vue.use(ElementUI);
 Vue.use(VueAxios, axios)
+Vue.use(VirtualCollection)
 Vue.prototype.pixiv = pixiv;
 Vue.prototype.app = app;
 Vue.prototype._ = _

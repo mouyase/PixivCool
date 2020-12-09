@@ -14,8 +14,7 @@ export default {
   },
   created() {
     this.app.firstRouter = location.hash.slice(1)
-    console.log('初次打开路由', this.firstRouter)
-    console.log('app初次打开路由', this.app.appFirstRouter)
+    console.log('初次打开路由', this.app.firstRouter)
     if (!this.app.isLogin()) {
       this.app.firstRouter = 'login'
     }
