@@ -70,8 +70,7 @@ export default {
         lock: true,
         text: '登录中',
       });
-      let postData = {}
-      postData = {
+      let postData = {
         client_id: 'MOBrBDS8blbauoSck0ZfDbtuzpyT',
         client_secret: 'lsACyCD94FhDUtGTXi3QzcFE2uU1hqtDaKeqrdwj',
         grant_type: 'password',
