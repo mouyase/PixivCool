@@ -46,16 +46,16 @@ export default {
     }
   },
   mounted() {
-    this.$http.get(this.pixiv.URL_APP_API + '/v1/walkthrough/illusts').then(response => {
-      let illusts = this._.get(response, 'data.illusts')
-      if (illusts.length !== 0) {
-        illusts.map((item, index) => {
-          if (this._.get(item, 'image_urls.square_medium')) {
-            this.background_img_array.push(this._.get(item, 'image_urls.square_medium'))
-          }
-        })
-      }
-    })
+    // this.$http.get(this.pixiv.URL_APP_API + '/v1/walkthrough/illusts').then(response => {
+    //   let illusts = this._.get(response, 'data.illusts')
+    //   if (illusts.length !== 0) {
+    //     illusts.map((item, index) => {
+    //       if (this._.get(item, 'image_urls.square_medium')) {
+    //         this.background_img_array.push(this._.get(item, 'image_urls.square_medium'))
+    //       }
+    //     })
+    //   }
+    // })
   },
   methods: {
     formPost() {
