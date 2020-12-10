@@ -35,10 +35,11 @@ export default {
       if (!this.is_loading) {
         this.is_loading = true
         let url = this.next_url ? this.next_url : this.pixiv.URL_APP_API + '/v1/illust/recommended'
-        let params = {
+        let params = this.next_url ? {} : {
           filter: 'for_android',
           include_ranking_illusts: false,
-          include_privacy_policy: true,
+          include_privacy_policy: false,
+          offset: 0
         }
         this.$http.get(url, {params: params}).then(response => {
           this.is_loading = false
@@ -46,7 +47,7 @@ export default {
           this.next_url = this._.get(response, 'data.next_url')
           if (illusts.length !== 0) {
             illusts.map((item) => {
-              if (this._.get(item, 'image_urls.medium') && this._.get(item, 'sanity_level') <= 2) {
+              // if (this._.get(item, 'image_urls.medium') && this._.get(item, 'sanity_level') <= 2) {
                 const width = this.image_width
                 const height = Math.floor((width / item.width) * item.height)
                 let data = {
@@ -55,7 +56,7 @@ export default {
                   height: height,
                 }
                 this.image_recommend_array.push(data)
-              }
+              // }
             })
           }
         }).catch(error => {
