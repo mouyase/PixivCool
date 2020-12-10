@@ -1,5 +1,5 @@
 <template>
-  <div class="view-home">
+  <div class="view-test">
     <VueImageWaterfall :array="image_recommend_array" v-infinite-scroll="loadData">
       <template slot-scope="scope">
         <el-image class="view-home-recommend-img" :src="scope.data.image_urls.medium" fit="cover" lazy>
@@ -13,7 +13,7 @@
 import VueImageWaterfall from '@/components/vue-image-waterfall'
 
 export default {
-  name: 'Home',
+  name: 'Test',
   components: {
     VueImageWaterfall
   },
