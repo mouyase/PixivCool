@@ -30,6 +30,9 @@ axios.interceptors.request.use((config) => {
     if (config.method === 'post') {
         config.data = qs.stringify(config.data);
     }
+    if (config.url.indexOf('/v1/walkthrough/illusts') !== -1) {
+        return config;
+    }
     if (app.getUser()) {
         config.headers.authorization = 'Bearer ' + app.getUser().access_token;
     }
