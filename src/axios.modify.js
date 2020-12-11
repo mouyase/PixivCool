@@ -27,15 +27,6 @@ let axios = Axios.create({
 // {"has_error":true,"errors":{"system":{"message":"103:pixiv ID\u3001\u307e\u305f\u306f\u30e1\u30fc\u30eb\u30a2\u30c9\u30ec\u30b9\u3001\u30d1\u30b9\u30ef\u30fc\u30c9\u304c\u6b63\u3057\u3044\u304b\u30c1\u30a7\u30c3\u30af\u3057\u3066\u304f\u3060\u3055\u3044\u3002","code":1508}},"error":"invalid_grant"}
 // axios.defaults.withCredentials = true
 axios.interceptors.request.use((config) => {
-    // console.log(Number(app.getRefreshTime()))
-    // console.log(new Date().getTime())
-    // if (config.url.indexOf('/auth/token') === 0) {
-    //     if (app.getRefreshTime()) {
-    //         if (Number(app.getRefreshTime()) < new Date().getTime()) {
-    //             console.log('该换Token了！')
-    //         }
-    //     }
-    // }
     if (config.method === 'post') {
         config.data = qs.stringify(config.data);
     }
@@ -55,7 +46,8 @@ axios.interceptors.response.use(response => {
     }
 }, error => {
     if (error && error.response && error.response.status) {
-        if (String(_.get(error, 'response.error.message')).indexOf('Error occurred at the OAuth process.') !== 0) {
+        if (String(_.get(error, 'response.error.message')).indexOf('Error occurred at the OAuth process.') !== -1) {
+            console.log(error.response)
             let config = error.response.config
             if (!isRefreshing) {
                 isRefreshing = true
@@ -74,7 +66,6 @@ axios.interceptors.response.use(response => {
                         app.setUser(userData)
                         config.headers.authorization = 'Bearer ' + userData.access_token;
                         config.baseURL = ''
-                        // 已经刷新了token，将所有队列中的请求进行重试
                         requests.forEach(callback => callback(userData.access_token))
                         requests = []
                         return axios(config)
@@ -86,9 +77,7 @@ axios.interceptors.response.use(response => {
                     isRefreshing = false
                 })
             } else {
-                // 正在刷新token，将返回一个未执行resolve的promise
                 return new Promise((resolve) => {
-                    // 将resolve放进队列，用一个函数形式来保存，等token刷新后直接执行
                     requests.push((access_token) => {
                         config.baseURL = ''
                         config.headers.authorization = 'Bearer ' + access_token;

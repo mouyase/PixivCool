@@ -2,7 +2,9 @@
   <div class="view-home">
     <VueImageWaterfall :array="image_recommend_array" v-infinite-scroll="loadData">
       <template slot-scope="scope">
-        <el-image class="view-home-recommend-img" :src="scope.data.image_urls.medium" fit="cover" lazy>
+        <el-image class="view-home-recommend-image" :src="scope.data.image_urls.medium" fit="cover" lazy>
+          <div slot="placeholder" class="view-home-recommend-image-slot">
+          </div>
         </el-image>
       </template>
     </VueImageWaterfall>
@@ -72,8 +74,15 @@ export default {
   overflow: auto;
 }
 
-.view-home-recommend-img {
+.view-home-recommend-image {
   width: 100%;
   height: 100%;
+  background-color: gray;
+}
+
+.view-home-recommend-image-slot {
+  width: 100%;
+  height: 100%;
+  background-color: gray;
 }
 </style>
