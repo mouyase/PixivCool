@@ -97,8 +97,7 @@ axios.interceptors.response.use(response => {
                 })
             }
         }
-        console.log(error)
-        return Promise.reject(error.response)
+        return Promise.reject(error)
     }
 })
 export default axios

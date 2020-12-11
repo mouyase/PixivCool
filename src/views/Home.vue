@@ -23,7 +23,6 @@ export default {
       image_width: 300,
       next_url: '',
       is_loading: false,
-      // windowsHeight: document.documentElement.clientHeight * 5,
     }
   },
   mounted() {
@@ -39,7 +38,6 @@ export default {
           filter: 'for_android',
           include_ranking_illusts: false,
           include_privacy_policy: false,
-          offset: 0
         }
         this.$http.get(url, {params: params}).then(response => {
           this.is_loading = false
@@ -47,23 +45,24 @@ export default {
           this.next_url = this._.get(response, 'data.next_url')
           if (illusts.length !== 0) {
             illusts.map((item) => {
-              // if (this._.get(item, 'image_urls.medium') && this._.get(item, 'sanity_level') <= 2) {
+              if (this._.get(item, 'image_urls.medium') && this._.get(item, 'sanity_level') <= 2) {
                 const width = this.image_width
                 const height = Math.floor((width / item.width) * item.height)
                 let data = {
                   data: item,
                   width: width,
                   height: height,
+                  key: item.id
                 }
                 this.image_recommend_array.push(data)
-              // }
+              }
             })
           }
         }).catch(error => {
           this.is_loading = false
         })
       }
-    }
+    },
   }
 }
 </script>

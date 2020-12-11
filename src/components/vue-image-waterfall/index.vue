@@ -25,7 +25,7 @@ export default {
     return {
       tableHeights: [],
       tableDataArrays: [],
-      height: '0px'
+      uniqueMap: {}
     }
   },
   watch: {
@@ -43,11 +43,13 @@ export default {
         // console.log('array数据变了', newVal)
         let newArray = this._.cloneDeep(this.tableDataArrays)
         this.array.map(item => {
-          newArray[this.getMinHeightIndex()].push(item)
-          this.tableHeights[this.getMinHeightIndex()] += item.height;
+          if (!this.uniqueMap.hasOwnProperty(item.key)) {
+            this.uniqueMap[item.key] = true
+            newArray[this.getMinHeightIndex()].push(item)
+            this.tableHeights[this.getMinHeightIndex()] += item.height;
+          }
         })
         this.tableDataArrays = this._.cloneDeep(newArray)
-        this.height = this.getMaxHeight() + 'px'
       },
       immediate: true
     }
