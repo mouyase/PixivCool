@@ -1,18 +1,18 @@
 <template>
   <div class="view-login">
-    <div style="position: absolute;z-index: -999;height: 100%;width: 100%;background: black;opacity: 0.5;"/>
-    <div class="view-login-background">
-      <div style="display: flex;flex-direction: row;flex-wrap: wrap;">
-        <el-image class="view-login-background-img" v-for="url in background_img_array" :src="url" :key="url"
-                  fit="cover" lazy
-        ></el-image>
-      </div>
-      <div style="display: flex;flex-direction: row;flex-wrap: wrap;">
-        <el-image class="view-login-background-img" v-for="url in background_img_array" :src="url" :key="url"
-                  fit="cover"
-        ></el-image>
-      </div>
-    </div>
+<!--    <div style="position: absolute;z-index: -999;height: 100%;width: 100%;background: black;opacity: 0.5;"/>-->
+<!--    <div class="view-login-background">-->
+<!--      <div style="display: flex;flex-direction: row;flex-wrap: wrap;">-->
+<!--        <el-image class="view-login-background-img" v-for="url in background_img_array" :src="url" :key="url"-->
+<!--                  fit="cover" lazy-->
+<!--        ></el-image>-->
+<!--      </div>-->
+<!--      <div style="display: flex;flex-direction: row;flex-wrap: wrap;">-->
+<!--        <el-image class="view-login-background-img" v-for="url in background_img_array" :src="url" :key="url"-->
+<!--                  fit="cover"-->
+<!--        ></el-image>-->
+<!--      </div>-->
+<!--    </div>-->
     <div class="login-content">
       <div style="color: white;font-size: 64px">PixivCool</div>
       <el-form :model="form_data" :rules="rules" ref="login-form">
@@ -56,16 +56,16 @@ export default {
     }
   },
   mounted() {
-    this.$http.get(this.pixiv.URL_APP_API + '/v1/walkthrough/illusts').then(response => {
-      let illusts = this._.get(response, 'data.illusts')
-      if (illusts.length !== 0) {
-        illusts.map((item, index) => {
-          if (this._.get(item, 'image_urls.square_medium') && this.background_img_array.length < 60) {
-            this.background_img_array.push(this._.get(item, 'image_urls.square_medium'))
-          }
-        })
-      }
-    })
+    // this.$http.get(this.pixiv.URL_APP_API + '/v1/walkthrough/illusts').then(response => {
+    //   let illusts = this._.get(response, 'data.illusts')
+    //   if (illusts.length !== 0) {
+    //     illusts.map((item, index) => {
+    //       if (this._.get(item, 'image_urls.square_medium') && this.background_img_array.length < 60) {
+    //         this.background_img_array.push(this._.get(item, 'image_urls.square_medium'))
+    //       }
+    //     })
+    //   }
+    // })
   },
   methods: {
     formPost() {
